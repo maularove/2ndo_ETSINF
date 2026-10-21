@@ -1,4 +1,5 @@
 # Apuntes ETC Prácticas
+## Instrucciones 
 ``li``: Guarda valor numérico constante dentro de un registro.
 
 Procesador MIPS trabaja con instrucciones tamaño fijo (32 bits). 
@@ -12,6 +13,8 @@ Por eso, el ensamblador tiene que hacer trucos matemáticos dividiendo el númer
 1. Los 16 bits de la parte alta (lo llamamos $K_h$).
 2. Los 16 bits de la parte baja (lo llamamos $K_l$).
 ```c
+// número decimal base 10
+// lo pasaremos a hexadecimal
 li $t0, 75369
 
 // lo que es:
@@ -40,12 +43,31 @@ __start: li $t0, 25
          add $s0, $s0, $s0
 ```
 
+otro ejemplo:
+<br>
+- si número cabe en 16 bits:
+```cs
+li $t0, 500
+
+// ensamblado lo traduce en una sola instrucción
+addi $t0, $zero, 500
+```
+
 ---
 
 `la` (Load Address):
 <br>
 Copiar la dirección de memoria de una etiqueta directamente en un registro.
+<br>
 
+se guarda en dos instrucciones, ***lui*** y ***ori***
+
+ejemplo:
+```cs
+// si dirección  es 0x10010000
+lui $at, 0x1001          # Carga la parte alta de la dirección de memoria
+ori $t0, $at, 0x0000     # Carga la parte baja en el registro final $t0
+```
 ---
 ### Instrucción de Manipulación de Datos y Lógicas
 
@@ -58,10 +80,10 @@ copia el contenido de un registro a otro (ej. ***move rs, rt***).
 suma el valor de un registro con un número constante pequeño (de 16 bits, llamado "inmediato") y guarda el resultado en otro registro.
 (ej. ***addi $t0, $zero, 100***)
 
-`and` (And Immediate):
+`andi` (And Immediate):
 <br>
 operación lógica AND entre un registro y una constante numérica de 16 bits.
-(ej. ***andi $t0, $1, 0xFFFF*** sirve para ).
+(ej. ***andi $t0, $1, 0xFFFF***).
 
 ### Instrucciones de Acceso a Memoria (Lectura y Escritura)
 `lw` (Load Word):
@@ -86,76 +108,26 @@ Simpre
 
 ## Instrucciones de Salto y Bifurcación
 ### A. Instrucciones Máquina Nativas (Directas)
-salto incondicional a la etiqueta eti
 ```cs
-j eti 
-// o
-b eti 
-``` 
-
-salta a eti si $rs == $rt
-```cs
-beq $rs, $rt, eti 
-```
-
-salta a eti si $rs != $rt
-```cs
-bne $rs, $rt, eti
-```
-
-salta si $rs > 0
-```cs
-bgtz $rs, eti
-```
-
-salta si $rs <= 0
-```cs
-blez $rs, $rt, eti
-```
-
-salta si $rs < 0
-```cs
-bltz $rs, $rt, eti
-```
-
-salta si $rs >= 0
-```cs
-bgez $rs, $rt, eti
+j eti                  # Salto incondicional absoluto
+b eti                  # Salto incondicional (pseudoinstrucción común)
+beq $rs, $rt, eti      # Salta si $rs == $rt
+bne $rs, $rt, eti      # Salta si $rs != $rt
+bgtz $rs, eti          # Salta si $rs > 0
+bgez $rs, eti          # Salta si $rs >= 0 (¡Ojo: solo un registro!)
+blez $rs, eti          # Salta si $rs <= 0 (¡Ojo: solo un registro!)
+bltz $rs, eti          # Salta si $rs < 0  (¡Ojo: solo un registro!)
 ```
 
 ### B. Pseudoinstrucciones Comunes
-salta a eti si $rs == 0
-```cs
-beqz $rs, eti
-// se traduce en
-beq $rs, $zero, eti
+```cs 
+beqz $rs, eti          # Salta si $rs == 0 (se traduce a: beq $rs, $zero, eti)
+bnez $rs, eti          # Salta si $rs != 0 (se traduce a: bne $rs, $zero, eti)
+bgt $rs, $rt, eti      # Salta si $rs > $rt
+ble $rs, $rt, eti      # Salta si $rs <= $rt
+blt $rs, $rt, eti      # Salta si $rs < $rt
+bge $rs, $rt, eti      # Salta si $rs >= $rt
 ```
-
-salta si $rs != 0
-```cs
-bnez $rs, eti
-```
-
-salta a eti si $rs > rt
-```cs
-bgt $rs, $rt, eti
-```
-
-salta a eti si $rs <= $rt
-```cs
-ble $rs, $rt, eti
-```
-
-salta a eti si $rs < $rt
-```cs
-blt $rs, $rt, eti
-```
-
-salta a eti si $rs >= $rt
-```cs
-bge $rs, $rt, eti
-```
-
 ---
 
 ![alt text](image-1.png)

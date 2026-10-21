@@ -51,3 +51,21 @@ Si la instrucción productora está en ***WB*** y la consumidora en ***ID*** en 
 Distancia segura:
 <br>
 Para que no haya conflicto (riesgo RAW - Read After Write), debe haber al menos 3 instrucciones de separación entre la que produce el dato y la que lo lee.
+
+---
+
+ej. Sea el siguiente fragmento de código MIPS que se ejecuta en un procesador segmentado con 5 etapas
+```cs
+ori $8, $0, 20
+lui $7, 0x0005
+ori $7, $7, 0xFFFF
+lw $4, 0($8)
+add $6, $6, $4
+sw $7, 0($8)
+addi $8, $8, -4
+andi $1, $8, 0x3A
+```
+
+Identificamos tres puntos críticos donde: 
+- una instrucción ***lee un registro*** que la instrucción anterior 
+- ***acaba de escribir*** sin la separación de ciclos suficiente
