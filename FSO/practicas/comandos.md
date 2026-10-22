@@ -323,7 +323,7 @@ Sistema en Linux crea directorio virtual llamado /proc que es como el panel de c
 
 Dentro de esas carpetas hay ficheros de texto con información:
 - ``cmdline``: Muestra comando exacto con el que lanzó el proceso
-- ``cmdline``: Muestra cuánta memoria RAM física (VmRSS) o virtual (VmSize) está consumiendo.
+- ``status``: Muestra cuánta memoria RAM física (VmRSS) o virtual (VmSize) está consumiendo.
 - `cpuinfo`: Información sobre el procesador de tu ordenador
 
 ---
@@ -372,7 +372,7 @@ fi
 `-gt`: greater than
 <br>
 
-`-ep`: igual
+`-eq`: igual
 <br>
 
 `-lt`: menor que

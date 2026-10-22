@@ -172,8 +172,8 @@ Supongamos la siguiente declaración:
 ```cs
 .data 0x10010000
 H: .space 4
-I: .byte 100
-J: .byte 200
+I: .word 100
+J: .word 200
 K: .word 300
 ```
 
