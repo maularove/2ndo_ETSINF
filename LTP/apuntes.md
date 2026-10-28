@@ -11,6 +11,12 @@
 | **Fase del compilador** | Fase de análisis semántico (tabla de símbolos, árbol sintáctico). | Intérpretes, máquinas virtuales, motor de ejecución. |
 | **Utilidad principal** | Detectar errores de tipo o de declaración antes de lanzar el programa. | Construir intérpretes, depurar, verificar asertos y demostrar corrección formal. |
 
+Semántica Dinámica:
+
+- Operacional (small-step y big-step).
+- Axiomática (Hoare, pmd).
+- Declarativa (denotacional, algebraica, teoría de modelos, punto fijo).
+
 
 ## Paradigma de Programación
 Un paradigma de programación es una forma o estilo de pensar y estructurar cómo se escribe el código para resolver un problema
@@ -233,3 +239,24 @@ La **Precondición Más Débil ($\text{pmd}(S, Q)$)** es la condición exacta y 
 
 3. **Condicional ($\text{if } b \text{ then } S_1 \text{ else } S_2$):**
    $$\text{pmd}(\text{if } b \text{ then } S_1 \text{ else } S_2, Q) \equiv (b \land \text{pmd}(S_1, Q)) \lor (\neg b \land \text{pmd}(S_2, Q))$$
+
+
+---
+
+## Semántica axiomática
+
+> es una semantica dinamica
+
+La semántica axiomática permite <mark><u>***especificar y demostrar propiedades de los
+programas mediante precondiciones, instrucciones y postcondiciones.***</u></mark> Su
+principal herramienta es la **lógica de Hoare**, que utiliza
+triples de la forma:
+
+```text
+{P}  programa  {Q}
+```
+
+Este triple indica que, si se cumple la precondición `P` antes de ejecutar el
+programa y este termina, entonces se cumple la postcondición `Q`. Por ello,
+es especialmente adecuada para la verificación formal y la demostración de
+la corrección de los programas.
